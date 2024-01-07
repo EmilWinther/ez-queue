@@ -1,6 +1,6 @@
 {
   "name": "ez-queue",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple queue system",
   "main": "index.js",
   "keywords": [
