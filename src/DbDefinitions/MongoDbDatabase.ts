@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import { QueueDatabaseInterface } from "../interfaces/QueueDatabaseInterface";
-import { QueueRow } from "../interfaces/global";
+import { QueueRow, User } from "../interfaces/global";
 
 export class MongoDBDatabase implements QueueDatabaseInterface {
   private client: MongoClient;
@@ -29,7 +29,8 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
       const collection = this.db.collection("queue");
       const count = await collection.countDocuments();
       const queuePosition = count + 1;
-      await collection.insertOne({ userId, queuePosition });
+      const user: User = { userId, queuePosition };
+      await collection.insertOne(user);
       console.info(
         `A user has been added to the queue: ${userId} at position: ${queuePosition}`
       );
