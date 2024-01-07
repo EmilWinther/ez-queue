@@ -29,7 +29,7 @@ export class SQLiteDatabase implements QueueDatabaseInterface {
     async enqueue(userId: string): Promise<void> {
         return new Promise((resolve, reject) => {
             const sqlCount = `SELECT COUNT(*) as count FROM queue`;
-            this.db.get(sqlCount, [], (err, row: QueueRow) => {
+            this.db.get(sqlCount, [], (err: Error, row: QueueRow) => {
                 if (err) {
                     console.error(err.message);
                     reject(err.message);
@@ -53,7 +53,7 @@ export class SQLiteDatabase implements QueueDatabaseInterface {
     async dequeue(): Promise<string | null> {
         return new Promise((resolve, reject) => {
             const sql = `SELECT userId FROM queue ORDER BY queuePosition LIMIT 1`;
-            this.db.get(sql, [], (err, row: QueueRow) => {
+            this.db.get(sql, [], (err: Error, row: QueueRow) => {
                 if (err) {
                     console.error(err.message);
                     reject(err.message);
@@ -87,7 +87,7 @@ export class SQLiteDatabase implements QueueDatabaseInterface {
     async viewQueue(): Promise<QueueRow[]> {
         return new Promise((resolve, reject) => {
             const sql = `SELECT userId, queuePosition FROM queue ORDER BY queuePosition`;
-            this.db.all(sql, [], (err, rows: QueueRow[]) => {
+            this.db.all(sql, [], (err: Error, rows: QueueRow[]) => {
                 if (err) {
                     console.error('You can not view the queue. Error: ' + err.message);
                     reject(err.message);
@@ -101,7 +101,7 @@ export class SQLiteDatabase implements QueueDatabaseInterface {
     async usersInFront(position: number): Promise<number> {
         return new Promise((resolve, reject) => {
             const sql = `SELECT COUNT(*) as count FROM queue WHERE queuePosition < ?`;
-            this.db.get(sql, [position], (err, row: QueueRow) => {
+            this.db.get(sql, [position], (err: Error, row: QueueRow) => {
                 if (err) {
                     console.error('You can not see the amount of users in front of you in the queue. Error: ' + err.message);
                     reject(err.message);
