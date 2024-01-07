@@ -57,6 +57,7 @@ describe('QueueDatabase', () => {
         await queueDb.enqueue('user1');
         await queueDb.enqueue('user2');
         await queueDb.enqueue('user3');
+        await queueDb.enqueue('user4');
 
         const count1 = await queueDb.usersInFront(1);
         expect(count1).toEqual(0);
