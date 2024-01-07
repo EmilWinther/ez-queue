@@ -22,57 +22,80 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
   }
 
   async enqueue(userId: string): Promise<void> {
-    const collection = this.db.collection("queue");
-    const count = await collection.countDocuments();
-    const queuePosition = count + 1;
-    await collection.insertOne({ userId, queuePosition });
-    console.info(
-      `A user has been added to the queue: ${userId} at position: ${queuePosition}`
-    );
+    if (!this.db) {
+      throw new Error("Database connection is not established.");
+    }
+    try {
+      const collection = this.db.collection("queue");
+      const count = await collection.countDocuments();
+      const queuePosition = count + 1;
+      await collection.insertOne({ userId, queuePosition });
+      console.info(
+        `A user has been added to the queue: ${userId} at position: ${queuePosition}`
+      );
+    } catch (err: any) {
+      console.error("Error enqueuing user:", err.message);
+      throw err;
+    }
   }
 
   async dequeue(): Promise<string | null> {
-    const collection = this.db.collection("queue");
-    const firstInQueue = await collection.findOne(
-      {},
-      { sort: { queuePosition: 1 } }
-    );
-    if (firstInQueue) {
-      await collection.deleteOne({ _id: firstInQueue._id });
-      console.info(
-        `A user has been removed from the queue: ${firstInQueue.userId}`
+    try {
+      const collection = this.db.collection("queue");
+      const firstInQueue = await collection.findOne(
+        {},
+        { sort: { queuePosition: 1 } }
       );
-      return firstInQueue.userId;
-    } else {
-      console.info("The queue is empty.");
-      return null;
+      if (firstInQueue) {
+        await collection.deleteOne({ _id: firstInQueue._id });
+        console.info(
+          `A user has been removed from the queue: ${firstInQueue.userId}`
+        );
+        return firstInQueue.userId;
+      } else {
+        console.info("The queue is empty.");
+        return null;
+      }
+    } catch (err: any) {
+      console.error(err.message);
+      throw err;
     }
   }
 
   async viewQueue(): Promise<QueueRow[]> {
-    const collection = this.db.collection("queue");
-    const queue = await collection
-      .find({})
-      .sort({ queuePosition: 1 })
-      .toArray();
-    console.info("Current queue:", queue);
-    return queue;
+    try {
+      const collection = this.db.collection("queue");
+      const queue = await collection
+        .find({})
+        .sort({ queuePosition: 1 })
+        .toArray();
+      console.info("Current queue:", queue);
+      return queue;
+    } catch (err: any) {
+      console.error(err.message);
+      throw err;
+    }
   }
 
   async usersInFront(position: number): Promise<number> {
-    const collection = this.db.collection("queue");
-    const user = await collection.findOne({ queuePosition: position });
-    if (user) {
-      const usersInFront = await collection.countDocuments({
-        queuePosition: { $lt: user.queuePosition },
-      });
-      console.info(
-        `Number of users in front of position ${position}: ${usersInFront}`
-      );
-      return usersInFront;
-    } else {
-      console.info(`No user found at position ${position}.`);
-      return 0;
+    try {
+      const collection = this.db.collection("queue");
+      const user = await collection.findOne({ queuePosition: position });
+      if (user) {
+        const usersInFront = await collection.countDocuments({
+          queuePosition: { $lt: user.queuePosition },
+        });
+        console.info(
+          `Number of users in front of position ${position}: ${usersInFront}`
+        );
+        return usersInFront;
+      } else {
+        console.info(`No user found at position ${position}.`);
+        return 0;
+      }
+    } catch (err: any) {
+      console.error(err.message);
+      throw err;
     }
   }
 }
