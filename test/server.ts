@@ -10,7 +10,6 @@ const io = new Server(server);
 const db = new MongoDBDatabase('mongodb://localhost:27017');
 const queueDb = new QueueDatabase(db);
 
-// Connect to the database before starting the server
 db.connect().then(() => {
   io.on('connection', async (socket) => {
     console.log('a user connected');
@@ -19,8 +18,9 @@ db.connect().then(() => {
     socket.on('disconnect', async () => {
       console.log('user disconnected');
       await queueDb.dequeue();
-      const updatedQueue = await queueDb.viewQueue(); // get the updated queue
-      io.emit('queueUpdate', updatedQueue); // send the updated queue to all connected clients
+      const updatedQueue = await queueDb.viewQueue();
+      io.emit('queueUpdate', updatedQueue);
+      io.emit('usersInFront', await queueDb.usersInFront(updatedQueue[0].count));
     });
   });
 
