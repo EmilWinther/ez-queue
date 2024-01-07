@@ -18,6 +18,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
             console.info('Connected to the MongoDB database.');
         } catch (err: any) {
             console.error(err.message);
+            throw err;
         }
     }
 
