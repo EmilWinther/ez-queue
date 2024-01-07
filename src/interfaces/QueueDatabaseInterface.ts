@@ -5,4 +5,5 @@ export interface QueueDatabaseInterface {
     dequeue(): Promise<string | null>;
     viewQueue(): Promise<QueueRow[]>;
     usersInFront(position: number): Promise<number>;
+    connect?(): Promise<void>;
 }

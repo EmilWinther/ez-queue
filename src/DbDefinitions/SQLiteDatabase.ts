@@ -25,6 +25,9 @@ export class SQLiteDatabase implements QueueDatabaseInterface {
             });
         });
     }
+    connect(): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
 
     async enqueue(userId: string): Promise<void> {
         return new Promise((resolve, reject) => {
