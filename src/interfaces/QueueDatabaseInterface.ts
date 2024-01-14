@@ -6,4 +6,5 @@ export interface QueueDatabaseInterface {
     viewQueue(): Promise<QueueRow[]>;
     usersInFront(position: number): Promise<number>;
     connect?(): Promise<void>;
+    clearCollection?(): Promise<void>;
 }
