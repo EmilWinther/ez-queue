@@ -1,4 +1,4 @@
-import { MongoDBDatabase } from '../src/DbDefinitions/MongoDbDatabase';
+import { MongoDBDatabase } from './MongoDbDatabase';
 
 describe('MongoDBDatabase', () => {
     let queueDb: MongoDBDatabase;

@@ -1,5 +1,5 @@
-import { QueueDatabaseInterface } from './interfaces/QueueDatabaseInterface';
-import { QueueRow } from './interfaces/global';
+import { QueueDatabaseInterface } from '../interfaces/QueueDatabaseInterface';
+import { QueueRow } from '../interfaces/global';
 
 export class QueueDatabase {
     private db: QueueDatabaseInterface

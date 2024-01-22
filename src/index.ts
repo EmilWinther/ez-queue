@@ -1,1 +1,1 @@
-export { QueueDatabase } from './QueueDatabase';
+export { QueueDatabase } from './databaseAdapters/QueueDatabase';

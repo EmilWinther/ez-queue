@@ -1,8 +1,8 @@
-import { SQLiteDatabase } from '../src/DbDefinitions/SQLiteDatabase';
-import { QueueDatabase } from '../src/QueueDatabase';
-import { QueueDatabaseInterface } from '../src/interfaces/QueueDatabaseInterface';
+import { SQLiteDatabase } from './SQLiteDatabase';
+import { QueueDatabase } from '../QueueDatabase';
+import { QueueDatabaseInterface } from '../../interfaces/QueueDatabaseInterface';
 
-describe('QueueDatabase', () => {
+describe('SQLiteDatabase', () => {
     let queueDb: QueueDatabaseInterface;
 
     beforeEach(() => {

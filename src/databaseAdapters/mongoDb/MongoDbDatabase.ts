@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
-import { QueueDatabaseInterface } from "../interfaces/QueueDatabaseInterface";
-import { QueueRow, User } from "../interfaces/global";
+import { QueueDatabaseInterface } from "../../interfaces/QueueDatabaseInterface";
+import { QueueRow, User } from "../../interfaces/global";
 
 /**
  * MongoDBDatabase class that implements the QueueDatabaseInterface.

@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
-import { QueueDatabaseInterface } from "../interfaces/QueueDatabaseInterface";
-import { QueueRow } from '../interfaces/global';
+import { QueueDatabaseInterface } from "../../interfaces/QueueDatabaseInterface";
+import { QueueRow } from '../../interfaces/global';
 
 
 export class SQLiteDatabase implements QueueDatabaseInterface {
