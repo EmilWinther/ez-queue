@@ -2,26 +2,17 @@ import { MongoClient } from "mongodb";
 import { QueueDatabaseInterface } from "../../interfaces/QueueDatabaseInterface";
 import { QueueRow, User } from "../../interfaces/global";
 
-/**
- * MongoDBDatabase class that implements the QueueDatabaseInterface.
- * This class is responsible for managing a queue of users in a MongoDB database.
- */
+
 export class MongoDBDatabase implements QueueDatabaseInterface {
   private client: MongoClient;
   private db: any;
 
-  /**
-   * Constructor for the MongoDBDatabase class.
-   * @param {string} uri - The connection string for the MongoDB database.
-   */
+
   constructor(uri: string) {
     this.client = new MongoClient(uri);
   }
 
-  /**
-   * Connects to the MongoDB database.
-   * @throws Will throw an error if the connection fails.
-   */
+
   async connect() {
     try {
       await this.client.connect();
@@ -33,11 +24,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
     }
   }
 
-  /**
-   * Adds a user to the queue in the MongoDB database.
-   * @param {string} userId - The ID of the user to add to the queue.
-   * @throws Will throw an error if the database connection is not established or if the operation fails.
-   */
+  
   async enqueue(userId: string): Promise<void> {
     if (!this.db) {
       throw new Error("Database connection is not established.");
@@ -59,11 +46,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
     }
   }
 
-  /**
-   * Removes the first user from the queue in the MongoDB database.
-   * @returns {Promise<string | null>} The ID of the user that was removed from the queue, or null if the queue was empty.
-   * @throws Will throw an error if the operation fails.
-   */
+ 
   async dequeue(): Promise<string | null> {
     try {
       const collection = this.db.collection("queue");
@@ -87,11 +70,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
     }
   }
 
-  /**
-   * Retrieves the current queue from the MongoDB database.
-   * @returns {Promise<QueueRow[]>} An array of QueueRow objects representing the current queue.
-   * @throws Will throw an error if the operation fails.
-   */
+ 
   async viewQueue(): Promise<QueueRow[]> {
     try {
       const collection = this.db.collection("queue");
@@ -107,12 +86,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
     }
   }
 
-  /**
-   * Retrieves the number of users in front of a given position in the queue.
-   * @param {number} position - The position in the queue to check.
-   * @returns {Promise<number>} The number of users in front of the given position in the queue.
-   * @throws Will throw an error if the operation fails.
-   */
+  
   async usersInFront(position: number): Promise<number> {
     try {
       const collection = this.db.collection("queue");
@@ -135,10 +109,7 @@ export class MongoDBDatabase implements QueueDatabaseInterface {
     }
   }
 
-  /**
-   * Clears the queue in the MongoDB database.
-   * @throws Will throw an error if the operation fails.
-   */
+  
   async clearCollection(): Promise<void> {
     try {
       const collection = this.db.collection("queue");
