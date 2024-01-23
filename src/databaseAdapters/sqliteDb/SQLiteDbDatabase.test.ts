@@ -1,4 +1,4 @@
-import { SQLiteDatabase } from './SQLiteDatabase';
+import { SQLiteDbDatabase } from './SQLiteDbDatabase';
 import { QueueDatabase } from '../QueueDatabase';
 import { QueueDatabaseInterface } from '../../interfaces/QueueDatabaseInterface';
 
@@ -6,7 +6,7 @@ describe('SQLiteDatabase', () => {
     let queueDb: QueueDatabaseInterface;
 
     beforeEach(() => {
-        queueDb = new SQLiteDatabase();
+        queueDb = new SQLiteDbDatabase();
     });
 
     it('should enqueue users with correct positions', async () => {

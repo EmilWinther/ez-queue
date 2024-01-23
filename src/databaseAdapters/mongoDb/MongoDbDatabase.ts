@@ -3,7 +3,7 @@ import { QueueDatabaseInterface } from "../../interfaces/QueueDatabaseInterface"
 import { QueueRow, User } from "../../interfaces/global";
 
 
-export class MongoDBDatabase implements QueueDatabaseInterface {
+export class MongoDbDatabase implements QueueDatabaseInterface {
   private client: MongoClient;
   private db: any;
 

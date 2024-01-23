@@ -3,7 +3,7 @@ import { QueueDatabaseInterface } from "../../interfaces/QueueDatabaseInterface"
 import { QueueRow } from '../../interfaces/global';
 
 
-export class SQLiteDatabase implements QueueDatabaseInterface {
+export class SQLiteDbDatabase implements QueueDatabaseInterface {
     private db: sqlite3.Database;
     constructor() {
         this.db = new sqlite3.Database(':memory:', (err) => {
